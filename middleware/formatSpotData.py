@@ -11,14 +11,12 @@ def formatLosAngeles(data):
 # features.append(...)
 
     feature_collection = FeatureCollection(features)
-    print(type(feature_collection))
     return feature_collection
 
 def formatSanFrancisco(data):
     #features = []
     ###features.append(Feature(geometry=point, properties={}))
     data = json.loads(json.dumps(data))
-    print(type(data))
     return data
 
 # add more features...

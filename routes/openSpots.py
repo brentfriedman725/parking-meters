@@ -6,15 +6,33 @@ from middleware import formatSpotData, externalOccupancy
 
 @app.route('/losangeles')
 def losAngeles():
+    
     deleteOccupancy.deleteOccupancy("LA")
     inputOccupancy.inputOccupancyLosAngeles(externalOccupancy.getOccupancy("LA"))
     data = getSpots.get_spots("LA")
     formattedData = formatSpotData.formatLosAngeles(data)
+
     
     return render_template(
         'losangeles.html', 
         data=formattedData
     )
+
+@app.route('/losangelesloc')
+def losAngelesLoc():
+    print('hi')
+    lat = float(request.args.get('lat'))
+    long = float(request.args.get('long'))
+
+    print(lat, long)
+    spotData = externalOccupancy.getOccupancyLaLoc(lat, long)
+    formattedData = formatSpotData.formatLosAngeles(spotData)
+
+    return render_template(
+        'losangeles.html',
+        data=formattedData
+    )
+    
 
 
 @app.route('/sanfrancisco')

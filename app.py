@@ -17,9 +17,8 @@ app.config['SESSION_FILE_DIR'] = './.flask_session/'
 
 @app.route('/')
 def index():
-    print('hi')
     return f'<h2><a>Home</a></h2>'
 
 
 
-app.run(port=5000, debug=True)
+app.run(port=8080, debug=False, threaded=True)
