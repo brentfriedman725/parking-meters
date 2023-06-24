@@ -22,10 +22,10 @@ def inputOccupancyLosAngeles(data):
     conn.close()
 
 def inputOccupancySanFrancisco(data):
-    print(list(data[0].values())[:28])
+    
     values = [[value for value in list(datum.values())[:28]] for datum in data]
     #for value in values[0]: print(type(value))
-    print(values)
+    
     execute_values(cur, spotsQuery.inputOccupancySanFrancisco, values)   
     
     conn.commit()

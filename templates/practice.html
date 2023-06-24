@@ -1,12 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>FlaskApp</title>
+    <title>Location Input</title>
+    <script>
+        function geolocateAndRedirect() {
+            var address = document.getElementById("address").value;
+            address = address.replace(/ /g, "+");
+            fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=AIzaSyDkWzgVUyzIMkRYs1YPwVMcIISk_VnoekE')
+                .then(response => response.json())
+                .then(data => {
+                    
+                    var latitude = data.results[0].geometry.location.lat;
+                    var longitude = data.results[0].geometry.location.lng;
+
+                    var newURL = "http://localhost:8080/losangelesloc?lat=" + encodeURIComponent(latitude) + "&long=" + encodeURIComponent(longitude);
+                    window.location.href = newURL;
+                })
+                .catch(error => console.error('Error:', error));
+
+            return false;
+            
+        }
+
+
+        function redirectToLocation() {
+            var latitude = document.getElementById("latitude").value;
+            var longitude = document.getElementById("longitude").value;
+            
+            var newURL = "http://localhost:8080/losangelesloc?lat=" + encodeURIComponent(latitude) + "&long=" + encodeURIComponent(longitude);
+            window.location.href = newURL;
+            return false;
+        }
+        
+        function showAllLASpots() {
+            window.location.href = "http://localhost:8080/losangeles";
+        }
+    </script>
 </head>
 <body>
-    <h1>Hello World!</h1>
-    <h2>Welcome to FlaskApp!</h2>
-    <h3>{{ data }}</h3>
+    <form onsubmit="return geolocateAndRedirect()">
+        <label for="address">Address:</label><br>
+        <input type="text" id="address" name="address"><br>
+        <input type="submit" value="Submit"><br>
+    </form>
+
+    <form onsubmit="return redirectToLocation()">
+        <label for="latitude">Latitude:</label><br>
+        <input type="text" id="latitude" name="latitude"><br>
+        <label for="longitude">Longitude:</label><br>
+        <input type="text" id="longitude" name="longitude"><br>
+        <input type="submit" value="Submit"><br>
+    </form>
+    <button onclick="showAllLASpots()">Show all LA spots</button>
 </body>
 </html>

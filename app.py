@@ -12,13 +12,4 @@ app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_FILE_DIR'] = './.flask_session/'
 
 
-
-
-
-@app.route('/')
-def index():
-    return f'<h2><a>Home</a></h2>'
-
-
-
-app.run(port=8080, debug=False, threaded=True)
+app.run(port=os.getenv('PORT'), debug=False, threaded=True)
